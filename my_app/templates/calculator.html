@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+        <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-sm-offset-2 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h3 class="panel-title">Please enter your costs <small>It's free!</small></h3>
+                        </div>
+                        <div class="panel-body">
+                        <form role="form">
+
+
+                            {# title of property #}
+                            <div class="form-group">
+                                <input type="text" name="title" id="title" class="form-control input-sm" placeholder="Address or Property Name">
+                            </div>
+
+
+                            {# rent amount field #}
+                            <div class="form-group">
+                                <input type="text" name="rent" id="rent" class="form-control input-sm" placeholder="Enter Rent Amount ex. $1000.00">
+                            </div>
+
+
+                            {# water and sewer row #}
+                            <div class="row">
+                                <h3>Utilities</h3>
+
+                                {# water #}
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <input type="text" name="water" id="water" class="form-control input-sm" placeholder="Monthly water bill ex. $50.00">
+                                </div>
+
+
+                                {# sewer #}
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="sewer" id="sewer" class="form-control input-sm" placeholder="Monthly sewer bill ex. $30.00">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+                                {# garbage #}
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <input type="text" name="garbage" id="garbage" class="form-control input-sm" placeholder="Monthly garbage bill">
+                                </div>
+
+
+                                {# electric #}
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="electric" id="electric" class="form-control input-sm" placeholder="Monthly electric bill">
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# cable #}
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <input type="text" name="cable" id="cable" class="form-control input-sm" placeholder="Monthly bill bill ex. $50.00">
+                            </div>
+
+
+                            {# Fees and Services #}
+                            <div class="row">
+                                <h3>Fees and Services</h3>
+
+                                {# maid service #}
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <input type="text" name="maid_service" id="maid_service" class="form-control input-sm" placeholder="Cost of maid services if you will not be handeling cleaning ex. $200">
+                                </div>
+
+
+                                {# hotel tax #}
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="hotel_tax" id="hotel_tax" class="form-control input-sm" placeholder="Monthly hotel tax reserve ex. 12%">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3>Variables</h3>
+
+                             {# occupancy #}
+                            <div class="form-group">
+                                <input type="text" name="occupancy" id="occupancy" class="form-control input-sm" placeholder="Occupancy Percentage">
+                            </div>
+
+                            {# daily_price #}
+                            <div class="form-group">
+                                <input type="text" name="daily_price" id="daily_price" class="form-control input-sm" placeholder="Daily Price">
+                            </div>
+
+                            <input type="submit" value="Register" class="btn btn-info btn-block">
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

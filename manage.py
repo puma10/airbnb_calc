@@ -8,9 +8,7 @@ from getpass import getpass
 
 from werkzeug.security import generate_password_hash
 
-from my_app.model import User
-
-from my_app.model import Post
+from my_app.models import User
 
 from my_app.database import session
 

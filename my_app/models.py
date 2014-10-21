@@ -1,0 +1,80 @@
+
+import datetime
+from sqlalchemy import Column, Integer, String, Sequence, Text, DateTime
+
+from flask.ext.login import UserMixin
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import sessionmaker
+import pdb
+import logging
+from database import Base, engine
+
+################################################################################
+# set up logging - see: https://docs.python.org/2/howto/logging.html
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+log.addHandler(console_handler)
+
+###############################################################################
+
+class User(Base, UserMixin):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128))
+    email = Column(String(128))
+    password = Column(String(128))
+    #cascade delete when a parent item is delete with the below cascade parameter
+    inputs = relationship("Input", backref="user", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return "username {}: id{}".format(self.name, self.id)
+
+    def is_authenticated(self):
+        return True
+
+class Input(Base):
+    __tablename__ = "inputs"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+
+
+    title = Column(String(1024))
+    rent = Column(Integer)
+    water = Column(Integer)
+    sewer = Column(Integer)
+    garbage = Column(Integer)
+    electric = Column(Integer)
+    cable = Column(Integer)
+    maid = Column(Integer)
+    hotel_tax = Column(Integer)
+    occupancy_percentage = Column(Integer)
+    daily_price = Column(Integer)
+    datetime = Column(DateTime, default=datetime.datetime.now)
+
+    outputs = relationship("Output", backref="input", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return "input set title {}: input id {}".format(self.title, self.id)
+
+
+
+class Output(Base):
+    __tablename__ = "outputs"
+    id = Column(Integer, primary_key=True)
+    input_id = Column(Integer, ForeignKey('inputs.id'))
+
+    break_even = Column(Integer)
+    monthly_profit = Column(Integer)
+
+    def __repr__(self):
+        return "output id = {}".format(self.id)
+
+Base.metadata.create_all(engine)

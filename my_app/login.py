@@ -2,7 +2,7 @@ from flask.ext.login import LoginManager
 
 from my_app import app
 from database import session
-from model import User
+from models import User
 
 login_manager = LoginManager()
 login_manager.init_app(app)
