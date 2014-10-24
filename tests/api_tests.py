@@ -10,6 +10,7 @@ from my_app import app
 from my_app import models
 from my_app.models import Input, User
 from my_app.database import Base, engine, session
+from my_app import api
 
 
 #setup logging
