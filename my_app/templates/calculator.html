@@ -8,7 +8,8 @@
                     <h3 class="panel-title">Please enter your costs <small>It's free!</small></h3>
                 </div>
                 <div class="panel-body centered">
-                    <form role="form">
+                    {# hijiking the defualt form behavior with onsubmit="return false" #}
+                    <form role="form" method="post" onsubmit="return false">
 
                         {# title of property #}
                         <div class="form-group">
@@ -98,13 +99,13 @@
                             <input type="text" name="daily_price" id="daily_price" class="form-control input-sm" placeholder="Daily Price">
                         </div>
 
-                        <input type="submit" value="Calculate" class="btn btn-info btn-block">
+                        <button type="submit" value="calculate" class="btn btn-info btn-block">Calculate</button>
 
                     </form>
-                    <div>
-                        <p>{{my_title}}</p>
-                    </div>
-
+                </div>
+                <div>
+                    {# Our javascript output goes between the span tags #}
+                    <p>The calculated results are <span id="results"></span></p>
                 </div>
             </div>
         </div>

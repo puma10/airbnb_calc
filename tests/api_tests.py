@@ -24,7 +24,6 @@ console_handler.setFormatter(formatter)
 log.addHandler(console_handler)
 
 
-
 class TestAPI(unittest.TestCase):
     """ Tests for the my_app API """
 
