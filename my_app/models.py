@@ -1,4 +1,3 @@
-
 import datetime
 from sqlalchemy import Column, Integer, String, Sequence, Text, DateTime
 
@@ -60,6 +59,27 @@ class Input(Base):
     datetime = Column(DateTime, default=datetime.datetime.now)
 
     outputs = relationship("Output", backref="input", cascade="all, delete-orphan")
+
+    # used to convert our database data to json
+    def as_dictionary(self):
+        post = {
+            "id": self.id,
+            "title": self.title,
+            "rent": self.rent,
+            "water": self.water,
+            "sewer": self.sewer,
+            "garbage": self.garbage,
+            "electric": self.electric,
+            "cable": self.cable,
+            "maid": self.maid,
+            "hotel_tax": self.hotel_tax,
+            "occupancy_percentage": self.occupancy_percentage,
+            "daily_price": self.daily_price,
+            #error - datetime is not json serilizable
+            #"datetime": self.datetime
+            }
+
+        return post
 
     def __repr__(self):
         return "input set title {}: input id {}".format(self.title, self.id)

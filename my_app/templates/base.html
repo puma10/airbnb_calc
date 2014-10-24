@@ -30,7 +30,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url_for('posts') }}">Blogful</a>
+                    {# Commented out to make post work #}
+                    <a class="navbar-brand" {# href="{{ url_for('posts') #} }}">Airbnb Calculator</a>
                 </div>
                 <div class="collapse navbar-collapse">
 
@@ -40,13 +41,16 @@
 
 
                     <ul class="nav navbar-nav navbar-right">
-                        {% if not current_user.is_authenticated() %}
+
+                       {# Commented out so this works for my_app #}
+                        {# {% if not current_user.is_authenticated() %}
                             <li><a href="{{ url_for('login_get') }}">log in</a></li>
                         {% else %}
                             <li><a href="{{ url_for('add_post_get') }}">Add Post</a></li>
 
                             <li><a href="{{ url_for('logout') }}">log out</a></li>
-                        {% endif %}
+                        {% endif %} #}
+
 
                     </ul>
                 </div>
@@ -65,5 +69,6 @@
         <div class="container">
             {% block content %}{% endblock %}
         </div>
+        {#  <script src={{ url_for('static/js', filename='main.js') }}></script> #}
     </body>
 </html>

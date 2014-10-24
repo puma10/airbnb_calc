@@ -6,6 +6,6 @@ class DevelopmentConfig(object):
 
 class TestingConfig(object):
     SQLALCHEMY_DATABASE_URI = "sqlite:///airbnb-testing.db"
-    DEBUG = False
+    DEBUG = True
     SECRET_KEY = "Not secret"
 
