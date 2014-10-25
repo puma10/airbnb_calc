@@ -257,7 +257,6 @@ class TestAPI(unittest.TestCase):
 
         data = json.loads(response.data)
 
-        log.info(data)
         self.assertEqual(data["message"], "32 is not of type 'string'")
 
     def testMissingData(self):
@@ -275,8 +274,6 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 422)
         data = json.loads(response.data)
         self.assertEqual(data["message"], "'rent' is a required property")
-
-
 
 
 

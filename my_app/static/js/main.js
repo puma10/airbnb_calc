@@ -41,7 +41,18 @@ $(document).ready(function() {
     $.ajax({
       type: "POST",
       url: "/",
-      data : { 'form_title': title_form, 'form_rent': rent_form, 'water_form': water_form, 'sewer_form': sewer_form, 'garbage_form': garbage_form, 'electric_form': electric_form, 'cable_form': cable_form, 'maid_form': maid_form, 'hotel_tax_form': hotel_tax_form, 'occupancy_form': occupancy_form, 'daily_price_form': daily_price_form, 'submit_time': submit_time
+      data : { 'form_title': title_form,
+        'form_rent': rent_form,
+        'water_form': water_form,
+        'sewer_form': sewer_form,
+        'garbage_form': garbage_form,
+        'electric_form': electric_form,
+        'cable_form': cable_form,
+        'maid_form': maid_form,
+        'hotel_tax_form': hotel_tax_form,
+        'occupancy_form': occupancy_form,
+        'daily_price_form': daily_price_form,
+        'submit_time': submit_time
       },
 
       // if the ajax connection was succesfuly we pass the data back in a json object named results
