@@ -60,7 +60,7 @@
 
                             {# cable #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <input type="text" name="cable" id="cable" class="form-control input-sm" placeholder="Monthly bill bill ex. $50.00">
+                                <input type="text" name="cable" id="cable" class="form-control input-sm" placeholder="Monthly cable bill ex. $50.00">
                             </div>
 
                         </div>
@@ -105,7 +105,10 @@
                 </div>
                 <div>
                     {# Our javascript output goes between the span tags #}
-                    <p>The calculated results are <span id="results"></span></p>
+                    <p>To amount of money you must make to break even is $<span id="breakeven"></span></p>
+                    <p>Your total revenue is $<span id="revenue"></span></p>
+                    <p>Your net is $<span id="profit"></span></p>
+                    <p>This was submitted at <span id="submit_time"></span></p>
                 </div>
             </div>
         </div>
