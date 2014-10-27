@@ -1,5 +1,4 @@
 from flask import render_template, request, jsonify
-
 from my_app import app
 from calculate import calculate_values
 
@@ -8,15 +7,15 @@ from calculate import calculate_values
 def home():
     if request.method=='POST':
         # created a function named calculate_values() that holds all calulation.  This will allow unittesting of the app.
-        data = calculate_values()
-        return jsonify(data)
+        calc_data = calculate_values()
+        return jsonify(calc_data)
 
     #if POST doesn't render - render the below GET instead
     return render_template("calculator.html")
 
 
 #SUMMARY OF DATA FLOW
-# - Grab HTML form posts but we stop it from interacting with the server with onsubmit="return false" in the form tag.
+# - With javascript HTML form posts but we stop it from interacting with the server with onsubmit="return false" in the form tag.
 # - Then using main.js we grab the data in the fields.
 # - Then using ajax we pass this data to our server in a post object.
 # - We make our manupliations on the data in the home view

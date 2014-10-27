@@ -66,7 +66,7 @@ $(document).ready(function() {
         $('#submit_time').html(results.time_submitted)
 
         // This clears all input fields after the form submission so the user can easily start over.
-        $('input').val('')
+        // $('input').val('')
       },
       error: function(error) {
         console.log(error)

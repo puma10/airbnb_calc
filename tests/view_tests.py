@@ -1,7 +1,6 @@
 import unittest
 import os
 import json
-from urlparse import urlparse
 from my_app.calculate import calculate_values
 
 # Configure our app to use the testing databse
@@ -28,15 +27,20 @@ class TestFormCalculations(unittest.TestCase):
 
     def setUp(self):
         """ Test setup """
+        # This setup configuration comes from the following tutorial
+        # http://flask.pocoo.org/docs/0.10/testing/
+
+        # These are variables, functions, databases and other depnedices we want to be available to all or tests
+
         self.client = app.test_client()
 
-        # Set up the tables in the database
-        # Base.metadata.create_all(engine)
+
+
 
     def tearDown(self):
         """ Test teardown """
-        # Remove the tables and their data from the database
-        # Base.metadata.drop_all(engine)
+        pass
+
 
     def testCalculations(self):
         # Getting my_app from an empty database
@@ -56,20 +60,27 @@ class TestFormCalculations(unittest.TestCase):
             'submit_time': "jan"
         })
 
+
         # The test_request_context() makes the request below work for some reason
         with app.test_request_context():
-            calculate_values()
 
-        self.assertEqual(days_occupied, 21)
+# ------------------IMPORTANT----------------------------------------------
+            # your data should be returned in json - figure out to get these values
+            # look at how to load your jsonified data - see chords
+            # then you can test yor values
+            data = json.loads(response.data)
 
-
-
-
-        print title
-
-
-
-        # self.assertEqual(home.days_occupied, 21)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(data["days_occupied"], 21)
+            self.assertEqual(data["hotel_tax_percentage"], 0.12)
+            self.assertEqual(data["maid_costs_monthly"], 525)
+            self.assertEqual(data["hotel_tax_reserve_monthly"], 252)
+            self.assertEqual(data["airbnb_service_charge_monthly"], 63)
+            self.assertEqual(data["utility_costs_monthly"], 250)
+            self.assertEqual(data["service_costs_monthly"], 840)
+            self.assertEqual(data["total_cost_monthly"], 2090)
+            self.assertEqual(data["revenue"], 2100)
+            self.assertEqual(data["profit"], 10)
 
 
 if __name__ == "__main__":
