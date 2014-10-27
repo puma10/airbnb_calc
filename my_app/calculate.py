@@ -55,7 +55,19 @@ def calculate_values(data=None):
         time_submitted = request.form.get('submit_time')
 
         # We add the data we want to pass back to a dictionary
-        data = {"breakeven": breakeven,
+        data = {
+            "title": title,
+            "rent": rent,
+            "water": water,
+            "sewer": sewer,
+            "garbage": garbage,
+            "electric": electric,
+            "cable": cable,
+            "maid": maid,
+            "hotel_tax": hotel_tax,
+            "occupancy_percentage": occupancy,
+            "daily_price": daily_rate,
+            "breakeven": breakeven,
             "time_submitted": time_submitted,
             "revenue": revenue,
             "profit": profit,

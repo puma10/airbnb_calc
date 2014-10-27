@@ -8,8 +8,8 @@ os.environ["CONFIG_PATH"] = "my_app.config.TestingConfig"
 
 from my_app import app
 from my_app.views import home
+from my_app.models import *
 from flask import request, Response
-
 
 #setup logging
 import logging
@@ -35,8 +35,6 @@ class TestFormCalculations(unittest.TestCase):
         self.client = app.test_client()
 
 
-
-
     def tearDown(self):
         """ Test teardown """
         pass
@@ -46,7 +44,7 @@ class TestFormCalculations(unittest.TestCase):
         # Getting my_app from an empty database
         response = self.client.post("/",
         data={
-            'form_title': "Josh's Condo",
+            'form_title': "Dave's Condo",
             'form_rent': 1000,
             'water_form': 50,
             'sewer_form': 50,
@@ -57,7 +55,7 @@ class TestFormCalculations(unittest.TestCase):
             'hotel_tax_form': 12,
             'occupancy_form': 70,
             'daily_price_form': 100,
-            'submit_time': "jan"
+            # 'submit_time': datetime.date(2013, 3, 25)
         })
 
 

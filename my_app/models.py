@@ -82,7 +82,7 @@ class Input(Base):
         return post
 
     def __repr__(self):
-        return "input set title {}: input id {}".format(self.title, self.id)
+        return "'Input' object from model.py - input_title = {}: input id = {}".format(self.title, self.id)
 
 
 
@@ -95,6 +95,6 @@ class Output(Base):
     monthly_profit = Column(Integer)
 
     def __repr__(self):
-        return "output id = {}".format(self.id)
+        return "'Output' object from model.py - output id = {}".format(self.id)
 
 Base.metadata.create_all(engine)

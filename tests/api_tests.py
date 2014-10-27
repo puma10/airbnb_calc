@@ -1,6 +1,7 @@
 import unittest
 import os
 import json
+import datetime
 from urlparse import urlparse
 
 # Configure our app to use the testing databse
@@ -11,6 +12,7 @@ from my_app import models
 from my_app.models import Input, User
 from my_app.database import Base, engine, session
 from my_app import api
+
 
 
 #setup logging
@@ -274,6 +276,36 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 422)
         data = json.loads(response.data)
         self.assertEqual(data["message"], "'rent' is a required property")
+
+
+    def testPersistCalculations(self):
+        """ Test the persistance of Calculations"""
+
+        response = self.client.post("/", headers=[("Accept", "application/json")],
+            data={
+                'form_title': "Josh's Condo",
+                'form_rent': 1000,
+                'water_form': 50,
+                'sewer_form': 50,
+                'garbage_form': 50,
+                'electric_form': 50,
+                'cable_form': 50,
+                'maid_form': 50,
+                'hotel_tax_form': 12,
+                'occupancy_form': 70,
+                'daily_price_form': 100,
+                'submit_time': datetime.date(2013, 3, 25)
+        })
+
+
+        input_data = session.query(Input).all()
+
+        for i in input_data:
+             print i
+
+        # self.assertEqual(len(input_data), 1)
+
+        self.assertEqual(response.status_code, 200)
 
 
 

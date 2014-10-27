@@ -4,10 +4,10 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from my_app import app
 
-#this tells sqlalchemey which database to use
-engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
+# this tells sqlalchemey which database to use
+engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"], echo=True)
 
-#this is an extention on sqlalchemey called declartive - it's the most up to date way to handle connect persiting models with sqlalchemy
+# this is an extension on sqlalchemey called declartive - it's the most up to date way to handle connect persiting models with sqlalchemy
 Base = declarative_base()
 
 #session is a sqlalchemy feature that holds the objects you've created in memory so they can be used in an ongoing transaction of changes to a database (update, insert, delete)
