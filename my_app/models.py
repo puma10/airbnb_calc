@@ -56,7 +56,8 @@ class Input(Base):
     hotel_tax = Column(Integer)
     occupancy_percentage = Column(Integer)
     daily_price = Column(Integer)
-    datetime = Column(DateTime, default=datetime.datetime.now)
+    # lambda is an anonymous function, without a name it's like we do a get_current():return datetime.datetime.now()
+    datetime = Column(DateTime, default=lambda: datetime.datetime.utcnow())
 
     outputs = relationship("Output", backref="input", cascade="all, delete-orphan")
 
@@ -74,9 +75,7 @@ class Input(Base):
             "maid": self.maid,
             "hotel_tax": self.hotel_tax,
             "occupancy_percentage": self.occupancy_percentage,
-            "daily_price": self.daily_price,
-            #error - datetime is not json serilizable
-            #"datetime": self.datetime
+            "daily_price": self.daily_price
             }
 
         return post

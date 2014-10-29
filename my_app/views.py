@@ -15,7 +15,6 @@ def home():
         rent = calc_data['rent']
 
         # Get the form submission time direct from ajax
-        date_time = request.form.get('submit_time')
 
         calc_data_post = Input(
                 title = calc_data['title'],
@@ -28,17 +27,15 @@ def home():
                 maid = calc_data['maid'],
                 hotel_tax = calc_data['hotel_tax'],
                 occupancy_percentage = calc_data['occupancy_percentage'],
-                daily_price = calc_data['daily_price'],
-                datetime = date_time
+                daily_price = calc_data['daily_price']
         )
 
-        log.info("josh, datetime = " + calc_data_post.datetime)
 
         session.add(calc_data_post)
         try:
-            sesssion.commit()
-        except:
-            log.info("couldn't commit")
+            session.commit()
+        except Exception as e:
+            log.info("couldn't commit %s" % e)
             session.rollback()
 
 
