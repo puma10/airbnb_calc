@@ -37,13 +37,11 @@
                     <ul class="nav navbar-nav navbar-right">
 
                        {# Commented out so this works for my_app #}
-                        {# {% if not current_user.is_authenticated() %}
+                        {% if not current_user.is_authenticated() %}
                             <li><a href="{{ url_for('login_get') }}">log in</a></li>
                         {% else %}
-                            <li><a href="{{ url_for('add_post_get') }}">Add Post</a></li>
-
                             <li><a href="{{ url_for('logout') }}">log out</a></li>
-                        {% endif %} #}
+                        {% endif %}
 
 
                     </ul>

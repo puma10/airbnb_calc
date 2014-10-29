@@ -1,12 +1,16 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, redirect, url_for
 from my_app import app
 from my_app.models import *
 from calculate import calculate_values
 from database import session
-
+from flask.ext.login import login_required
+from flask.ext.login import login_user, logout_user
+from werkzeug.security import check_password_hash
+from flask import flash
 
 
 @app.route("/", methods=['GET', 'POST'])
+@login_required
 def home():
     if request.method=='POST':
         # created a function named calculate_values() that holds all calulation.  This will allow unittesting of the app.
@@ -30,7 +34,6 @@ def home():
                 daily_price = calc_data['daily_price']
         )
 
-
         session.add(calc_data_post)
         try:
             session.commit()
@@ -38,13 +41,37 @@ def home():
             log.info("couldn't commit %s" % e)
             session.rollback()
 
-
-
         # return jsonified data to the frontend to be used in the html
         return jsonify(calc_data)
 
     #if POST doesn't render - render the below GET instead
     return render_template("calculator.html")
+
+
+@app.route("/login", methods=["GET"])
+def login_get():
+    return render_template("login.html")
+
+
+@app.route("/login", methods=["POST"])
+def login_post():
+    email = request.form["email"]
+    password = request.form["password"]
+    user = session.query(User).filter_by(email=email).first()
+    if not user or not check_password_hash(user.password, password):
+        flash("Incorrect username or password", "danger")
+        return redirect(url_for("login_get"))
+
+    login_user(user)
+    return redirect("/login")
+    # return redirect(request.args.get('next') or url_for("posts"))
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out", "danger")
+    return redirect("/login")
 
 
 #SUMMARY OF DATA FLOW

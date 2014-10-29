@@ -10,6 +10,4 @@ import views
 import filters
 import login
 
-from flask.ext.login import LoginManager
-#from flask.ext.openid import OpenID
 

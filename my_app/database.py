@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from my_app import app
 
 # this tells sqlalchemey which database to use
-engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"], echo=True)
+engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
 
 # this is an extension on sqlalchemey called declartive - it's the most up to date way to handle connect persiting models with sqlalchemy
 Base = declarative_base()
