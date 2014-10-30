@@ -20,7 +20,7 @@ def home():
 
         # Get the form submission time direct from ajax
         print "the current user is", current_user.get_id()
-        calc_data_post = Input(
+        calc_data_post_input = Input(
                 user_id = current_user.get_id(),
                 title = calc_data['title'],
                 rent = calc_data['rent'],
@@ -35,7 +35,14 @@ def home():
                 daily_price = calc_data['daily_price']
         )
 
-        session.add(calc_data_post)
+        calc_data_post_output = Output(
+                input_id = calc_data_post_input.id,
+                break_even = calc_data['breakeven'],
+                monthly_profit = calc_data['profit']
+        )
+
+        session.add_all([calc_data_post_input, calc_data_post_output])
+
         try:
             session.commit()
         except Exception as e:
