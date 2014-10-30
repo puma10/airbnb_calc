@@ -14,7 +14,8 @@ from my_app.database import session
 
 from flask.ext.migrate import Migrate, MigrateCommand
 
-from my_app.database import Base
+from my_app.database import Base, engine, session
+
 
 manager = Manager(app)
 
@@ -43,6 +44,7 @@ def adduser():
         print "User with that email address already exists"
         return
 
+    #add get_pass to hide password
     password = raw_input("Password ")
     password_2 = raw_input("Password ")
     while not (password and password_2) or password != password_2:
@@ -52,6 +54,14 @@ def adduser():
                 password=generate_password_hash(password))
     session.add(user)
     session.commit()
+
+@manager.command
+def createtables():
+    Base.metadata.create_all(engine)
+
+@manager.command
+def deletetables():
+    Base.metadata.drop_all(engine)
 
 if __name__ == "__main__":
     manager.run()
