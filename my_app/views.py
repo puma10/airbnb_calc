@@ -4,7 +4,7 @@ from my_app.models import *
 from calculate import calculate_values
 from database import session
 from flask.ext.login import login_required
-from flask.ext.login import login_user, logout_user
+from flask.ext.login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash
 from flask import flash
 
@@ -19,8 +19,9 @@ def home():
         rent = calc_data['rent']
 
         # Get the form submission time direct from ajax
-
+        print "the current user is", current_user.get_id()
         calc_data_post = Input(
+                user_id = current_user.get_id(),
                 title = calc_data['title'],
                 rent = calc_data['rent'],
                 water = calc_data['water'],
@@ -44,8 +45,36 @@ def home():
         # return jsonified data to the frontend to be used in the html
         return jsonify(calc_data)
 
+    print "the current user is", current_user.get_id()
     #if POST doesn't render - render the below GET instead
     return render_template("calculator.html")
+
+
+@app.route("/data_rows")
+# @app.route("/page/<int:page>")
+def data_rows(page=1, paginate_by=10):
+    # Zero-indexed page
+    page_index = page - 1
+    count = session.query(Input).count()
+
+    start = page_index * paginate_by
+    end = start + paginate_by
+
+    total_pages = (count - 1) / paginate_by + 1
+    has_next = page_index < total_pages - 1
+    has_prev = page_index > 0
+
+    data_rows = session.query(Input).filter(Input.user_id==current_user.get_id())
+    data_rows = data_rows.order_by(Input.datetime.desc())
+    data_rows = data_rows[start:end]
+
+    return render_template("data_rows.html",
+        data_rows=data_rows,
+        has_next=has_next,
+        has_prev=has_prev,
+        page=page,
+        total_pages=total_pages
+    )
 
 
 @app.route("/login", methods=["GET"])
@@ -63,13 +92,15 @@ def login_post():
         return redirect(url_for("login_get"))
 
     login_user(user)
-    return redirect("/login")
+    return redirect(url_for('home'))
     # return redirect(request.args.get('next') or url_for("posts"))
+
 
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
+    print "the current user id is {}".format(current_user.get_id())
     flash("You have been logged out", "danger")
     return redirect("/login")
 

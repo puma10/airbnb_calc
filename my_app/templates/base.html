@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Airbnb</title>
+        <title><a href="{{ url_for('home') }}">Airbnb</a></title>
 
         <!-- CSS -->
         <!-- Bootstrap -->
@@ -25,7 +25,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     {# Commented out to make post work #}
-                    <a class="navbar-brand" {# href="{{ url_for('posts') #} }}">Airbnb Calculator</a>
+                    <a class="navbar-brand" href="{{ url_for('home') }}">Airbnb Calculator</a>
                 </div>
                 <div class="collapse navbar-collapse">
 
@@ -66,5 +66,6 @@
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
          <script src={{ url_for('static', filename='js/main.js') }}></script>
+         <script src={{ url_for('static', filename='js/interface.js') }}></script>
     </body>
 </html>

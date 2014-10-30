@@ -1,29 +1,15 @@
-{% macro render_post(post) %}
-<div class="row">
-    <div class="col-md-2 text-right metadata">
-        <ul class="list-unstyled">
-            <li>
-                {{ post.datetime | dateformat("%d/%m/%y") }}
-            </li>
-            <li>
-                {{ post.author.name }}
-            </li>
-            <li>
-                <a href="{{ url_for('edit_post', post_id = post.id - 1)}}"> Edit Post</a>
-            </li>
-            <li>
-                <a href="{{ url_for('delete_post', post_id = post.id - 1)}}"> Delete Post</a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-md-10">
-        <h1>
+{% macro render_database_output(data_row) %}
 
-            <a href="{{ url_for('view_post', post_id = post.id - 1) }}">
-            {{ post.title }}
-            </a>
-        </h1>
-        {{ post.content | safe }}
-    </div>
-</div>
+
+    <tr>
+    <td><input type="checkbox" class="checkthis" /></td>
+    <td>{{ data_row.datetime }}</td>
+    <td>{{ data_row.title }}</td>
+    <td>{{ data_row.rent }}</td>
+    <td>{{ data_row.daily_price }}</td>
+    <td>{{ data_row.occupancy_percentage }}</td>
+    <td><p><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-placement="top" rel="tooltip"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+    <td><p><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+    </tr>
+
 {% endmacro %}
