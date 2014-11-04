@@ -5,40 +5,41 @@ from calculate import calculate_values
 from database import session
 from flask.ext.login import login_required
 from flask.ext.login import login_user, logout_user, current_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask import flash
+from forms import SignupForm
 
 
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def home():
-    if request.method=='POST':
+    if request.method == 'POST':
         # created a function named calculate_values() that holds all calulation.  This will allow unittesting of the app.
-        #run post data through calculate_values function
+        # run post data through calculate_values function
         calc_data = calculate_values()
         rent = calc_data['rent']
 
         # Get the form submission time direct from ajax
         print "the current user is", current_user.get_id()
         calc_data_post_input = Input(
-                user_id = current_user.get_id(),
-                title = calc_data['title'],
-                rent = calc_data['rent'],
-                water = calc_data['water'],
-                sewer = calc_data['sewer'],
-                garbage = calc_data['garbage'],
-                electric = calc_data['electric'],
-                cable = calc_data['cable'],
-                maid = calc_data['maid'],
-                hotel_tax = calc_data['hotel_tax'],
-                occupancy_percentage = calc_data['occupancy_percentage'],
-                daily_price = calc_data['daily_price']
+            user_id=current_user.get_id(),
+            title=calc_data['title'],
+            rent=calc_data['rent'],
+            water=calc_data['water'],
+            sewer=calc_data['sewer'],
+            garbage=calc_data['garbage'],
+            electric=calc_data['electric'],
+            cable=calc_data['cable'],
+            maid=calc_data['maid'],
+            hotel_tax=calc_data['hotel_tax'],
+            occupancy_percentage=calc_data['occupancy_percentage'],
+            daily_price=calc_data['daily_price']
         )
 
         calc_data_post_output = Output(
-                input_id = calc_data_post_input.id,
-                break_even = calc_data['breakeven'],
-                monthly_profit = calc_data['profit']
+            input_id=calc_data_post_input.id,
+            break_even=calc_data['breakeven'],
+            monthly_profit=calc_data['profit']
         )
 
         session.add_all([calc_data_post_input, calc_data_post_output])
@@ -53,7 +54,7 @@ def home():
         return jsonify(calc_data)
 
     print "the current user is", current_user.get_id()
-    #if POST doesn't render - render the below GET instead
+    # if POST doesn't render - render the below GET instead
     return render_template("calculator.html")
 
 
@@ -71,17 +72,18 @@ def data_rows(page=1, paginate_by=10):
     has_next = page_index < total_pages - 1
     has_prev = page_index > 0
 
-    data_rows = session.query(Input).filter(Input.user_id==current_user.get_id())
+    data_rows = session.query(Input).filter(
+        Input.user_id == current_user.get_id())
     data_rows = data_rows.order_by(Input.datetime.desc())
     data_rows = data_rows[start:end]
 
     return render_template("data_rows.html",
-        data_rows=data_rows,
-        has_next=has_next,
-        has_prev=has_prev,
-        page=page,
-        total_pages=total_pages
-    )
+                           data_rows=data_rows,
+                           has_next=has_next,
+                           has_prev=has_prev,
+                           page=page,
+                           total_pages=total_pages
+                           )
 
 
 @app.route("/login", methods=["GET"])
@@ -112,7 +114,30 @@ def logout():
     return redirect("/login")
 
 
-#SUMMARY OF DATA FLOW
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    form = SignupForm()
+
+    if request.method == 'POST':
+        if form.validate() == False:
+            return render_template('signup.html', form=form)
+        else:
+            newuser = User(
+                name="{} {}".format(form.firstname.data, form.lastname.data),
+                email=form.email.data,
+                password=generate_password_hash(form.password.data)
+                )
+            session.add(newuser)
+            session.commit()
+            login_user(newuser)
+            return redirect(url_for('home'))
+
+
+    elif request.method == 'GET':
+        return render_template('signup.html', form=form)
+
+
+# SUMMARY OF DATA FLOW
 # - With javascript HTML form posts but we stop it from interacting with the server with onsubmit="return false" in the form tag.
 # - Then using main.js we grab the data in the fields.
 # - Then using ajax we pass this data to our server in a post object.
