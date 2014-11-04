@@ -1,29 +1,29 @@
-import unittest
-import os
-import json
-import datetime
-from urlparse import urlparse
+    import unittest
+    import os
+    import json
+    import datetime
+    from urlparse import urlparse
 
-# Configure our app to use the testing databse
-os.environ["CONFIG_PATH"] = "my_app.config.TestingConfig"
+    # Configure our app to use the testing databse
+    os.environ["CONFIG_PATH"] = "my_app.config.TestingConfig"
 
-from my_app import app
-from my_app import models
-from my_app.models import Input, User
-from my_app.database import Base, engine, session
-from my_app import api
+    from my_app import app
+    from my_app import models
+    from my_app.models import Input, User
+    from my_app.database import Base, engine, session
+    from my_app import api
 
 
 
-#setup logging
-import logging
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-log.addHandler(console_handler)
+    #setup logging
+    import logging
+    log = logging.getLogger(__name__)
+    log.setLevel(logging.DEBUG)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    console_handler.setFormatter(formatter)
+    log.addHandler(console_handler)
 
 
 class TestAPI(unittest.TestCase):
