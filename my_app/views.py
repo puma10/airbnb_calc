@@ -7,7 +7,8 @@ from flask.ext.login import login_required
 from flask.ext.login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import flash
-from forms import SignupForm
+from forms import SignupForm, ResetPassword
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -135,6 +136,34 @@ def signup():
 
     elif request.method == 'GET':
         return render_template('signup.html', form=form)
+
+
+
+@app.route('/reset_pass', methods=['GET', 'POST'])
+def reset_pass():
+    form = ResetPassword()
+
+    if request.method == 'POST':
+        if form.validate() == False:
+            return render_template('password_reset.html', form=form)
+        else:
+            print "the current user is {}".format(current_user)
+            print form.email.data
+            # Add password reset logic here
+
+            # newuser = User(
+            #     name="{} {}".format(form.firstname.data, form.lastname.data),
+            #     email=form.email.data,
+            #     password=generate_password_hash(form.password.data)
+            #     )
+            # session.add(newuser)
+            # session.commit()
+            # login_user(newuser)
+            return redirect(url_for('home'))
+
+
+    elif request.method == 'GET':
+        return render_template('password_reset.html', form=form)
 
 
 # SUMMARY OF DATA FLOW

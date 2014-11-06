@@ -1,13 +1,14 @@
 import datetime
-from sqlalchemy import Column, Integer, String, Sequence, Text, DateTime
+from sqlalchemy import Column, Integer, String, Sequence, Text, DateTime, Boolean
 
-from flask.ext.login import UserMixin
+from flask.ext.login import UserMixin, current_user, current_app
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 import pdb
 import logging
 from database import Base, engine
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 ################################################################################
 # set up logging - see: https://docs.python.org/2/howto/logging.html
@@ -29,14 +30,33 @@ class User(Base, UserMixin):
     name = Column(String(128))
     email = Column(String(128))
     password = Column(String(128))
+    # active = Column(Boolean())
     #cascade delete when a parent item is delete with the below cascade parameter
     inputs = relationship("Input", backref="user", cascade="all, delete-orphan")
+
+    def get_token(self, expiration=1800):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'user': self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return None
+        id = data.get('user')
+        if id:
+            return User.query.get(id)
+        return None
+
+    def is_authenticated(self):
+        return True
 
     def __repr__(self):
         return "username {}: id{}".format(self.name, self.id)
 
-    def is_authenticated(self):
-        return True
+
 
 class Input(Base):
     __tablename__ = "inputs"
