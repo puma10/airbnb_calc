@@ -8,7 +8,23 @@ from flask.ext.login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import flash
 from forms import SignupForm, ResetPassword
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
+
+def serialize_expiring_token(data, expiration=3600):
+    return Serializer(app.config['SECRET_KEY'], expires_in=expiration).dumps(data)
+
+def deserialize_expiring_token(data, expiration=3600):
+    try:
+        return Serializer(app.config['SECRET_KEY'], expires_in=expiration).loads(data)
+    except SignatureExpired:
+        return {}
+
+def send_email(subject, sender, recipients, text_body, html_body):
+    msg = Message(subject, sender=sender, recipients=recipients)
+    msg.body = text_body
+    msg.html = html_body
+    mail.send(msg)
+
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -143,27 +159,77 @@ def signup():
 def reset_pass():
     form = ResetPassword()
 
-    if request.method == 'POST':
-        if form.validate() == False:
-            return render_template('password_reset.html', form=form)
-        else:
-            print "the current user is {}".format(current_user)
-            print form.email.data
-            # Add password reset logic here
+    if form.validate_on_submit():
+        print "the current user is {}".format(current_user)
+        email = form.email.data
+        # Add password reset logic here
+        serial = serialize_expiring_token(email, expiration=3600)
+        user = session.query(User).filter(User.email==email).first()
 
-            # newuser = User(
-            #     name="{} {}".format(form.firstname.data, form.lastname.data),
-            #     email=form.email.data,
-            #     password=generate_password_hash(form.password.data)
-            #     )
-            # session.add(newuser)
-            # session.commit()
-            # login_user(newuser)
-            return redirect(url_for('home'))
+        print "the serial is {}".format(serial)
+        print "the url we are going to pass is {}".format(url_root + url_for('confirm', token=serial))
+        # if user:
+        #     subject = "Change Password Request"
+        #     sender = "hello@airbnbcalc.com"
+        #     recipients = user.email
+        #     text_body ="Please follow the following link to reset your password.\
+        #     \n {}".format(url_for(confirm(serial)))
+        #     html_body = None
 
+        #     m = send_email(subject, sender, recipients, text_body, html_body)
+
+        #     print m.html_body
+
+        #     flash("Please check your email to reset your password.")
+        #     return redirect(url_for('home'))
+
+        # elif not user:
+        #     flash("This email is not in our database.")
+        #     return render_template('password_reset.html', form=form)
+
+        print form.errors
+        return render_template('password_reset.html', form=form)
 
     elif request.method == 'GET':
         return render_template('password_reset.html', form=form)
+
+
+@app.route('/confirm/<token>/')
+def confirm(token):
+    pass
+    # data = deserialize_expiring_token(token, 3600*3600)
+    # if data.get('email'):
+    #     u = session.query(User).filter_by(User.email==data['email']).first()
+    #     u.confirmed = True
+    #     session.add(u)
+    #     session.commit()
+    #     flash("Your account was confirmed and your trial was extended to 30 days.")
+    #     return redirect(url_for('login'))
+    # return redirect(url_for('index'))
+
+
+
+# @app.route('/reset_password/<url>/', methods=['GET', 'POST'])
+# def reset_password(url):
+#     if current_user.is_authenticated():
+#         flash("You are logged in. You can't reset the password.")
+#         return redirect(url_for('user', nickname=current_user.nickname))
+#     data = deserialize_expiring_token(url, 3600*24)
+#     if data.get('reset'):
+#         u = User.query.filter(User.email==data['reset']).first()
+#         if u:
+#             form = PasswordResetForm()
+#             if form.validate_on_submit():
+#                 u.password = generate_password_hash(form.password.data)
+#                 session.add(u)
+#                 session.commit()
+#                 m = send_email(u.email, 'You password was successfully changed!', 'auth/email/password_changed', user=u)
+#                 flash("Your password was changed.")
+#                 return redirect(url_for('user', nickname=u.nickname))
+#             return render_template('reset_password.html', form=form)
+#     flash("Wrong url or expired password reset token. Please try again.")
+#     return redirect(url_for('index'))
+
 
 
 # SUMMARY OF DATA FLOW

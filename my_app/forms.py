@@ -57,7 +57,7 @@ class ResetPassword(Form):
 
 
 
-class newPassword(Form):
+class NewPassword(Form):
     password_1 = PasswordField(
             'Password', [validators.Required("Please enter a password.")])
 
