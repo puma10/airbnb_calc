@@ -57,7 +57,7 @@ class ResetPassword(Form):
 
 
 
-class NewPassword(Form):
+class PasswordResetForm(Form):
     password_1 = PasswordField(
             'Password', [validators.Required("Please enter a password.")])
 
@@ -68,16 +68,17 @@ class NewPassword(Form):
 
     def validate(self):
         if not Form.validate(self):
+            print "Form did not validate"
             return False
 
-        if not (password and password_2):
+        if not (password_1 and password_2):
             print "Please enter both passwords"
-            self.email.errors.append("Looks like you forgot to enter a value")
+            self.password_1.errors.append("Looks like you forgot to enter a value")
             return False
 
-        if password != password_2:
+        if password_1 != password_2:
             print "new passwords don't match"
-            self.email.errors.append("new passords don't match")
+            self.password_1.errors.append("new passords don't match")
             return False
 
         else:

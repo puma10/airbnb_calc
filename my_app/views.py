@@ -7,13 +7,12 @@ from flask.ext.login import login_required
 from flask.ext.login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import flash
-from forms import SignupForm, ResetPassword
+from forms import SignupForm, PasswordResetForm, ResetPassword
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
 
 from flask.ext.mail import Message, Mail
 
 
-mail = Mail(app)
 
 def serialize_expiring_token(data, expiration=3600):
     return Serializer(app.config['SECRET_KEY'], expires_in=expiration).dumps(data)
@@ -25,6 +24,7 @@ def deserialize_expiring_token(data, expiration=3600):
         return {}
 
 def send_email(subject, sender, recipients, text_body, html_body):
+    mail = Mail(app)
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     msg.html = html_body
@@ -159,7 +159,7 @@ def signup():
 
 
 
-@app.route('/reset_pass', methods=['GET', 'POST'])
+@app.route('/reset', methods=['GET', 'POST'])
 def reset_pass():
     form = ResetPassword()
 
@@ -170,21 +170,24 @@ def reset_pass():
         serial = serialize_expiring_token(email, expiration=3600)
         user = session.query(User).filter(User.email==email).first()
 
-        print "the serial is {}".format(serial)
-        print "the home urls is {}".format(url_for('signup', _external=True))
-        print "the url we are going to pass is {}".format(url_for('reset_password', url=serial, _external=True))
+        # print "the serial is {}".format(serial)
+        # print "the home urls is {}".format(url_for('signup', _external=True))
+        # print "the home urls type is {}".format(type(url_for('signup', _external=True)))
+
+        # print "the url we are going to pass is {}".format(url_for('reset_password', url=serial, _external=True))
+        # print "the user.email type is {}".format(type(user.email))
+
 
         if user:
             subject = "Change Password Request"
             sender = "hello@airbnbcalc.com"
-            recipients = user.email
+            recipients = [user.email]
             text_body ="Please follow the following link to reset your password.\
             \n {}".format(url_for('reset_password', url=serial, _external=True))
             html_body = None
 
             m = send_email(subject, sender, recipients, text_body, html_body)
 
-            print m.html_body
 
             flash("Please check your email to reset your password.")
             return redirect(url_for('reset_pass'))
@@ -219,22 +222,26 @@ def reset_pass():
 def reset_password(url):
     if current_user.is_authenticated():
         flash("You are logged in. You can't reset the password.")
-        return redirect(url_for('user', nickname=current_user.nickname))
+        return redirect(url_for('home'))
     data = deserialize_expiring_token(url, 3600*24)
-    if data.get('reset'):
-        u = User.query.filter(User.email==data['reset']).first()
-        if u:
+    print "the data is {}".format(data)
+    if data:
+        print "here 1"
+        user = session.query(User).filter(User.email==data).first()
+        if user:
+            print "here 2"
             form = PasswordResetForm()
             if form.validate_on_submit():
-                u.password = generate_password_hash(form.password.data)
-                session.add(u)
+                print "here 3"
+                user.password = generate_password_hash(form.password_1.data)
+                session.add(user)
                 session.commit()
-                m = send_email(u.email, 'You password was successfully changed!', 'auth/email/password_changed', user=u)
+                m = send_email(user.email, 'You password was successfully changed!', 'auth/email/password_changed', user=user)
                 flash("Your password was changed.")
-                return redirect(url_for('user', nickname=u.nickname))
-            return render_template('reset_password.html', form=form)
-    flash("Wrong url or expired password reset token. Please try again.")
-    return redirect(url_for('index'))
+                return redirect(url_for('home'))
+            return render_template('new_password.html', form=form)
+        flash("Wrong url or expired password reset token. Please try again.")
+        return redirect(url_for('home'))
 
 
 
