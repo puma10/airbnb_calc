@@ -10,6 +10,11 @@ from flask import flash
 from forms import SignupForm, ResetPassword
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
 
+from flask.ext.mail import Message, Mail
+
+
+mail = Mail(app)
+
 def serialize_expiring_token(data, expiration=3600):
     return Serializer(app.config['SECRET_KEY'], expires_in=expiration).dumps(data)
 
@@ -24,7 +29,6 @@ def send_email(subject, sender, recipients, text_body, html_body):
     msg.body = text_body
     msg.html = html_body
     mail.send(msg)
-
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -168,14 +172,14 @@ def reset_pass():
 
         print "the serial is {}".format(serial)
         print "the home urls is {}".format(url_for('signup', _external=True))
-        print "the url we are going to pass is {}".format(url_for('confirm', url=serial, _external=True))
+        print "the url we are going to pass is {}".format(url_for('reset_password', url=serial, _external=True))
 
         if user:
             subject = "Change Password Request"
             sender = "hello@airbnbcalc.com"
             recipients = user.email
             text_body ="Please follow the following link to reset your password.\
-            \n {}".format(url_for('confirm', _external=True, token=serial))
+            \n {}".format(url_for('reset_password', url=serial, _external=True))
             html_body = None
 
             m = send_email(subject, sender, recipients, text_body, html_body)
