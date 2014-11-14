@@ -53,9 +53,9 @@ $(document).ready(function() {
         'occupancy_form': occupancy_form,
         'daily_price_form': daily_price_form,
         'submit_time': submit_time
-      },
+    },
 
-      // if the ajax connection was succesfuly we pass the data back in a json object named results
+      // if the ajax connection was succesful we pass the data back in a json object named results
       success: function(results) {
         console.log(results);
 
@@ -66,11 +66,14 @@ $(document).ready(function() {
         $('#submit_time').html(results.time_submitted)
 
         // This clears all input fields after the form submission so the user can easily start over.
+        //Add the below on clear
         // $('input').val('')
       },
+
       error: function(error) {
         console.log(error)
       }
+
     });
 
   });

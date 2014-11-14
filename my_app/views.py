@@ -30,18 +30,20 @@ def send_email(subject, sender, recipients, text_body, html_body):
     msg.html = html_body
     mail.send(msg)
 
-
+# Calculator
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def home():
     if request.method == 'POST':
-        # created a function named calculate_values() that holds all calulation.  This will allow unittesting of the app.
-        # run post data through calculate_values function
+        # created a function named calculate_values() that holds all calulations.  This will allow unittesting of the app.
+
+        # calculate_values returns all the manipulated data
         calc_data = calculate_values()
+
         rent = calc_data['rent']
 
         # Get the form submission time direct from ajax
-        print "the current user is", current_user.get_id()
+        # print "the current user is", current_user.get_id()
         calc_data_post_input = Input(
             user_id=current_user.get_id(),
             title=calc_data['title'],
@@ -56,6 +58,7 @@ def home():
             occupancy_percentage=calc_data['occupancy_percentage'],
             daily_price=calc_data['daily_price']
         )
+
 
         calc_data_post_output = Output(
             input_id=calc_data_post_input.id,
@@ -77,6 +80,8 @@ def home():
     print "the current user is", current_user.get_id()
     # if POST doesn't render - render the below GET instead
     return render_template("calculator.html")
+
+
 
 
 @app.route("/data_rows")
@@ -170,14 +175,6 @@ def reset_pass():
         serial = serialize_expiring_token(email, expiration=3600)
         user = session.query(User).filter(User.email==email).first()
 
-        # print "the serial is {}".format(serial)
-        # print "the home urls is {}".format(url_for('signup', _external=True))
-        # print "the home urls type is {}".format(type(url_for('signup', _external=True)))
-
-        # print "the url we are going to pass is {}".format(url_for('reset_password', url=serial, _external=True))
-        # print "the user.email type is {}".format(type(user.email))
-
-
         if user:
             subject = "Change Password Request"
             sender = "hello@airbnbcalc.com"
@@ -199,8 +196,7 @@ def reset_pass():
         print form.errors
         return render_template('password_reset.html', form=form)
 
-    elif request.method == 'GET':
-        return render_template('password_reset.html', form=form)
+    return render_template('password_reset.html', form=form)
 
 
 # confirm user email account
@@ -223,25 +219,46 @@ def reset_password(url):
     if current_user.is_authenticated():
         flash("You are logged in. You can't reset the password.")
         return redirect(url_for('home'))
+
     data = deserialize_expiring_token(url, 3600*24)
     print "the data is {}".format(data)
+
     if data:
         print "here 1"
         user = session.query(User).filter(User.email==data).first()
+        print "user = {}".format(user.email)
         if user:
             print "here 2"
             form = PasswordResetForm()
+            print "the form = {} ".format(form)
+
+            print "does form validate on submit = {}".format(form.validate_on_submit())
+            # the problem is right here.
+
             if form.validate_on_submit():
                 print "here 3"
                 user.password = generate_password_hash(form.password_1.data)
                 session.add(user)
                 session.commit()
-                m = send_email(user.email, 'You password was successfully changed!', 'auth/email/password_changed', user=user)
+
+                subject ='You password was successfully changed!'
+                sender = "hello@airbnbcalc.com"
+                recipients = [user.email]
+                text_body = "Your password has succesfully been changed.  Thank you!"
+                html_body = None
+
+                m = send_email(subject, sender, recipients, text_body, html_body)
+
                 flash("Your password was changed.")
                 return redirect(url_for('home'))
+
             return render_template('new_password.html', form=form)
+
         flash("Wrong url or expired password reset token. Please try again.")
         return redirect(url_for('home'))
+
+    return render_template('new_password.html', form=form)
+
 
 
 
