@@ -2,10 +2,16 @@
 $(document).ready(function() {
   console.log("ready!");
 
-  // on form submission ...
-  $('form').on('submit', function() {
 
-    console.log("the form has been submitted");
+$(".btn").click(function () {
+   buttonClick($(this).val());
+});
+
+  // on form submission ...
+  function buttonClick(button_value) {
+
+    console.log("the form has been submitted")
+    console.log("clicked_button type is " + jQuery.type(button_value))
 
     // grab values from the form
     title_form = $('input[name="title"]').val();
@@ -38,10 +44,13 @@ $(document).ready(function() {
 
 
     //send the POST data back to the server from the client using AJAX. Anything not put in the data variable is not passed in the post.
+    //$.ajax() is a jquery method to create an ajax request
+    // http://learn.jquery.com/ajax/jquery-ajax-methods/
     $.ajax({
       type: "POST",
       url: "/",
-      data : { 'form_title': title_form,
+      data : {
+      	'form_title': title_form,
         'form_rent': rent_form,
         'water_form': water_form,
         'sewer_form': sewer_form,
@@ -52,7 +61,8 @@ $(document).ready(function() {
         'hotel_tax_form': hotel_tax_form,
         'occupancy_form': occupancy_form,
         'daily_price_form': daily_price_form,
-        'submit_time': submit_time
+        'submit_time': submit_time,
+        'clicked_button': button_value
     },
 
       // if the ajax connection was succesful we pass the data back in a json object named results
@@ -69,13 +79,17 @@ $(document).ready(function() {
         //Add the below on clear
         // $('input').val('')
       },
+      // close succes function
 
       error: function(error) {
+        console.log("Josh there was an error")
         console.log(error)
       }
 
     });
+	 // close ajax call
 
-  });
+  };
+// close buttonClick function
 
 });

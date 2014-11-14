@@ -34,13 +34,16 @@ def send_email(subject, sender, recipients, text_body, html_body):
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def home():
+    print "in the view function"
+    print "the button clicked was {}".format(request.form.get('clicked_button'))
     if request.method == 'POST':
         # created a function named calculate_values() that holds all calulations.  This will allow unittesting of the app.
 
         # calculate_values returns all the manipulated data
         calc_data = calculate_values()
 
-        rent = calc_data['rent']
+
+        print "rent = {}".format(calc_data['rent'])
 
         # Get the form submission time direct from ajax
         # print "the current user is", current_user.get_id()
