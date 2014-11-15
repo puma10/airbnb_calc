@@ -34,53 +34,62 @@ def send_email(subject, sender, recipients, text_body, html_body):
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def home():
+    # tests
     print "in the view function"
-    print "the button clicked was {}".format(request.form.get('clicked_button'))
+    print "the current user id is", current_user.get_id()
     if request.method == 'POST':
+
+        calc_data = calculate_values()
+        print "views.py: the button clicked was {}".format(request.form.get('clicked_button'))
         # created a function named calculate_values() that holds all calulations.  This will allow unittesting of the app.
 
         # calculate_values returns all the manipulated data
-        calc_data = calculate_values()
+        if request.form.get('clicked_button') == "calculate":
+
+            return jsonify(calc_data)
 
 
-        print "rent = {}".format(calc_data['rent'])
-
-        # Get the form submission time direct from ajax
-        # print "the current user is", current_user.get_id()
-        calc_data_post_input = Input(
-            user_id=current_user.get_id(),
-            title=calc_data['title'],
-            rent=calc_data['rent'],
-            water=calc_data['water'],
-            sewer=calc_data['sewer'],
-            garbage=calc_data['garbage'],
-            electric=calc_data['electric'],
-            cable=calc_data['cable'],
-            maid=calc_data['maid'],
-            hotel_tax=calc_data['hotel_tax'],
-            occupancy_percentage=calc_data['occupancy_percentage'],
-            daily_price=calc_data['daily_price']
-        )
+        if request.form.get('clicked_button') == "save":
 
 
-        calc_data_post_output = Output(
-            input_id=calc_data_post_input.id,
-            break_even=calc_data['breakeven'],
-            monthly_profit=calc_data['profit']
-        )
+            calc_data_post_input = Input(
+                user_id=current_user.get_id(),
+                title=calc_data['title'],
+                rent=calc_data['rent'],
+                water=calc_data['water'],
+                sewer=calc_data['sewer'],
+                garbage=calc_data['garbage'],
+                electric=calc_data['electric'],
+                cable=calc_data['cable'],
+                maid=calc_data['maid'],
+                hotel_tax=calc_data['hotel_tax'],
+                occupancy_percentage=calc_data['occupancy_percentage'],
+                daily_price=calc_data['daily_price']
+            )
 
-        session.add_all([calc_data_post_input, calc_data_post_output])
 
-        try:
-            session.commit()
-        except Exception as e:
-            log.info("couldn't commit %s" % e)
-            session.rollback()
+            calc_data_post_output = Output(
+                input_id=calc_data_post_input.id,
+                break_even=calc_data['breakeven'],
+                monthly_profit=calc_data['profit']
+            )
+
+            session.add_all([calc_data_post_input, calc_data_post_output])
+
+            try:
+                session.commit()
+            except Exception as e:
+                log.info("couldn't commit %s" % e)
+                session.rollback()
+
+            calc_data['form_state'] = 'saved'
+
+            return jsonify(calc_data)
+
 
         # return jsonified data to the frontend to be used in the html
         return jsonify(calc_data)
 
-    print "the current user is", current_user.get_id()
     # if POST doesn't render - render the below GET instead
     return render_template("calculator.html")
 

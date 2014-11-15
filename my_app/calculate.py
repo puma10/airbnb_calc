@@ -15,11 +15,13 @@ def calculate_values(data=None):
     # form.get is used to access the data from a form POST request
     # we create the below variables to grab the data from the ajax post.
     title = request.form.get('form_title')
-    print title
-    rent = request.form.get('form_rent')
+    print "the title is {}".format(title)
+    rent = float(str(request.form.get('form_rent')))
+    print "rent variable is of type {}".format(type(rent))
     occupancy = request.form.get('occupancy_form')
     hotel_tax = request.form.get('hotel_tax_form')
-    hotel_tax = float(hotel_tax)
+    print "hotel_tax variable is of type {}".format(type(hotel_tax))
+    hotel_tax = float(str(hotel_tax))
     hotel_tax_percentage = hotel_tax / 100
     # correct later for correct numbers of days in a month
     days_occupied = float(occupancy) / 100 * 30
