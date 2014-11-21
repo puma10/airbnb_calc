@@ -54,7 +54,7 @@ $(document).ready(function() {
 
 	    $.ajax({
 		    type: "POST",
-		    url: "/",
+		    url: "/calc",
 		    data : {
 		      	'form_title': title_form,
 		        'form_rent': rent_form,
@@ -101,15 +101,6 @@ $(document).ready(function() {
 
   	if (button_value == "save") {
   		console.log("we have saved the form")
-  		$('#save').hide();
-  		$('#reset').hide();
-        $('#calculate').show();
-
-        $('.results').hide();
-
-        // This clears all input fields after the form submission so the user can easily start over.
-        //Add the below on clear
-        $('input').val('')
 
         title_form = $('input[name="title"]').val();
 	    rent_form = $('input[name="rent"]').val();
@@ -141,7 +132,7 @@ $(document).ready(function() {
 
 	    $.ajax({
 	      	type: "POST",
-	      	url: "/",
+	      	url: "/calc",
 	     	data : {
 		      	'form_title': title_form,
 		        'form_rent': rent_form,
@@ -169,6 +160,16 @@ $(document).ready(function() {
       		}
 
     	}); // close ajax call
+
+    	$('#save').hide();
+  		$('#reset').hide();
+        $('#calculate').show();
+
+        $('.results').hide();
+
+        // This clears all input fields after the form submission so the user can easily start over.
+        //Add the below on clear
+        $('input').val('')
 
     } // close if statement
 

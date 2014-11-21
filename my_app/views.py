@@ -30,8 +30,14 @@ def send_email(subject, sender, recipients, text_body, html_body):
     msg.html = html_body
     mail.send(msg)
 
-# Calculator
 @app.route("/", methods=['GET', 'POST'])
+def index():
+    pass
+
+    return render_template("cover.html")
+
+# Calculator
+@app.route("/calc", methods=['GET', 'POST'])
 @login_required
 def home():
     # tests

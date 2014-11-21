@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form role="form" method="POST">
+<form class="login" role="form" method="POST">
     <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="Email address" required>
@@ -11,5 +11,6 @@
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
     <div><p><a href="{{ url_for('signup') }}">Or Signup</a></p></div>
+    <div><p><a href="{{ url_for('reset_pass') }}">Forgot Password?</a></p></div>
 </form>
 {% endblock %}

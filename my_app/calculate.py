@@ -15,6 +15,7 @@ def calculate_values(data=None):
     # form.get is used to access the data from a form POST request
     # we create the below variables to grab the data from the ajax post.
     title = request.form.get('form_title')
+    print request.form
     print "the title is {}".format(title)
     rent = float(str(request.form.get('form_rent')))
     print "rent variable is of type {}".format(type(rent))
