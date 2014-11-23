@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Sign up</h2>
 
   {% for message in form.firstname.errors %}
     <div class="flash">{{ message }}</div>
@@ -19,22 +18,32 @@
     <div class="flash">{{ message }}</div>
   {% endfor %}
 
-  <form action="{{ url_for('signup') }}" method=post>
+  <form class="short_form" action="{{ url_for('signup') }}" method=post>
+     <h2>Sign up</h2>
+
     {{ form.hidden_tag() }}
 
-    {{ form.firstname.label }}
-    {{ form.firstname }}
+    <div class="form-group">
+      {{ form.firstname.label }}
+      {{ form.firstname (class_='form-control') }}
+    </div>
 
-    {{ form.lastname.label }}
-    {{ form.lastname }}
+    <div class="form-group">
+      {{ form.lastname.label }}
+      {{ form.lastname (class_='form-control') }}
+    </div>
 
-    {{ form.email.label }}
-    {{ form.email }}
+    <div class="form-group">
+      {{ form.email.label }}
+      {{ form.email (class_='form-control') }}
+    </div>
 
-    {{ form.password.label }}
-    {{ form.password }}
+    <div class="form-group">
+      {{ form.password.label }}
+      {{ form.password (class_='form-control') }}
+    </div>
 
-    {{ form.submit }}
+    {{ form.submit (class_='btn btn-default wtf_form_submit') }}
   </form>
 
 {% endblock %}

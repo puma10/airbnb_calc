@@ -30,6 +30,11 @@ def send_email(subject, sender, recipients, text_body, html_body):
     msg.html = html_body
     mail.send(msg)
 
+
+
+
+
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
     pass
@@ -39,7 +44,7 @@ def index():
 # Calculator
 @app.route("/calc", methods=['GET', 'POST'])
 @login_required
-def home():
+def home(page=1, paginate_by=10):
     # tests
     print "in the view function"
     print "the current user id is", current_user.get_id()
@@ -96,8 +101,32 @@ def home():
         # return jsonified data to the frontend to be used in the html
         return jsonify(calc_data)
 
+    # def user_data_rows(page=1, paginate_by=10):
+    # Zero-indexed page
+    page_index = page - 1
+    count = session.query(Input).count()
+
+    start = page_index * paginate_by
+    end = start + paginate_by
+
+    total_pages = (count - 1) / paginate_by + 1
+    has_next = page_index < total_pages - 1
+    has_prev = page_index > 0
+
+    data_rows = session.query(Input).filter(
+        Input.user_id == current_user.get_id())
+    data_rows = data_rows.order_by(Input.datetime.desc())
+    data_rows = data_rows[start:end]
+
+
     # if POST doesn't render - render the below GET instead
-    return render_template("calculator.html")
+    return render_template("calculator.html",
+                           data_rows=data_rows,
+                           has_next=has_next,
+                           has_prev=has_prev,
+                           page=page,
+                           total_pages=total_pages
+                           )
 
 
 
@@ -132,6 +161,8 @@ def data_rows(page=1, paginate_by=10):
 
 @app.route("/login", methods=["GET"])
 def login_get():
+    if current_user.is_authenticated():
+        return redirect(url_for('home'))
     return render_template("login.html")
 
 

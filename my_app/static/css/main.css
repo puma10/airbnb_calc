@@ -1,15 +1,58 @@
+/*Bootstrap override*/
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.alert {
+    width:100%;
+}
+
+
 div.metadata {
     margin-top: 20px;
     font-size: 1.5em;
 }
 
-
-
-form.login{
+form.short_form{
     margin-left:auto;
     margin-right:auto;
     width:30%;
+    min-width:200px;
     margin-top: 3rem;
     color: #f96145;
 
 }
+
+form.short_form h2{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+form.short_form #other_login_info{
+    padding-top: 20px;
+}
+
+.wtf_form_submit{
+    margin-top: 20px;
+}
+
+/* calculator form page*/
+.calc_form_row{
+    background-color:#eaf8ff;
+    padding: 60px 0px;
+}
+
+.output{
+    float:right;
+    color:#009922;
+    padding-right:5px;
+
+}
+
+div.results{
+    background-color: lightgreen;
+    padding: 18px 0px;
+    color: rgb(89, 89, 89);
+}
+

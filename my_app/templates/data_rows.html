@@ -12,25 +12,8 @@
         <h4>Bootstrap Snipp for Datatable</h4>
         <div class="table-responsive">
 
+        {{ macros.render_database_output(data_rows) }}
 
-              <table id="mytable" class="table table-bordred table-striped">
-
-                   <thead>
-
-                   <th><input type="checkbox" id="checkall" /></th>
-                   <th>Date</th>
-                    <th>Property Title</th>
-                     <th>Rent</th>
-                      <th>Price</th>
-                  <th>Occupancy</th>
-                   </thead>
-    <tbody>
-    {% for data_row in data_rows %}
-        {{ macros.render_database_output(data_row) }}
-    {% endfor %}
-    </tbody>
-
-</table>
 
             </div>
 

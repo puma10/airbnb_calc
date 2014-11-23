@@ -10,7 +10,7 @@
         <!-- CSS -->
         <!-- Bootstrap -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <!-- Blog -->
+        <!-- main.css -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
 
@@ -25,7 +25,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     {# Commented out to make post work #}
-                    <a class="navbar-brand" href="{{ url_for('home') }}">Airbnb Calculator</a>
+                    <a class="navbar-brand" href="{{ url_for('index') }}">Airbnb Calculator</a>
                 </div>
                 <div class="collapse navbar-collapse">
 
@@ -58,10 +58,7 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-
-        <div class="container">
             {% block content %}{% endblock %}
-        </div>
         <!-- JavaScript -->
         <!-- jQuery -->
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>

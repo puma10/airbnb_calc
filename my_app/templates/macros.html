@@ -1,15 +1,41 @@
-{% macro render_database_output(data_row) %}
+{% macro render_database_output(data_rows) %}
 
 
-    <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>{{ data_row.datetime }}</td>
-    <td>{{ data_row.title }}</td>
-    <td>{{ data_row.rent }}</td>
-    <td>{{ data_row.daily_price }}</td>
-    <td>{{ data_row.occupancy_percentage }}</td>
-    <td><p><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-placement="top" rel="tooltip"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip"><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
+    <table id="mytable" class="table table-bordred table-striped">
+        <thead>
+            <th><input type="checkbox" id="checkall" /></th>
+            <th>Date</th>
+            <th>Property Title</th>
+            <th>Rent</th>
+            <th>Price</th>
+            <th>Occupancy</th>
+        </thead>
+        {% for data_row in data_rows %}
+            <tr>
+                <td><input type="checkbox" class="checkthis" /></td>
+                <td>{{ data_row.datetime }}</td>
+                <td>{{ data_row.title }}</td>
+                <td>{{ data_row.rent }}</td>
+                <td>{{ data_row.daily_price }}</td>
+                <td>{{ data_row.occupancy_percentage }}</td>
+                <td><p><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" data-placement="top" rel="tooltip"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                <td><p><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" data-placement="top" rel="tooltip"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endmacro %}
+
+
+{% macro render_database_output_to_table(data_row) %}
+
+
+    <tbody>
+    {% for data_row in data_rows %}
+        {{ macros.render_database_output(data_row) }}
+    {% endfor %}
+    </tbody>
+
+
 
 {% endmacro %}

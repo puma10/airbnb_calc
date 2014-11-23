@@ -12,6 +12,7 @@ $(document).ready(function() {
 	$('#revenue').hide();
    	$('#profit').hide();
     $('#submit_time').hide();
+    $('#suggest').hide();
 
 
   // on form submission ...
@@ -86,6 +87,28 @@ $(document).ready(function() {
 		        $('#revenue').html(results.revenue)
 		        $('#profit').html(results.profit)
 		        $('#submit_time').html(results.time_submitted)
+
+		        if (results.profit < 0){
+		        	$("#suggest_output").html("<b>Bummer</b>, you're not profitable yet. Adjust your nightly rate or increase your average occupancy.");
+		        	$('#suggest').show();
+		        	$( "#suggest" ).removeClass( "alert alert-success" );
+		        	$( "#suggest" ).addClass( "alert alert-danger" );
+		        	// $("#suggest_output").css( "background-color", "#a50404" );
+		        	// $("#suggest_output").css( "background-color", "red" );
+		        	$("div.results").css( "background-color", "rgb(238, 144, 144" );
+		        	$(".output").css( "color", "#9E0505" );
+
+
+
+		        }else{
+		        	$("#suggest_output").html("<b>Chaching</b> Given your calculations your unit is profitable! Checkout these resources to help you get started with Airbnb!");
+		        	$( "#suggest" ).removeClass( "alert alert-danger" );
+		        	$( "#suggest" ).addClass( "alert alert-success" );
+
+		        	$("div.results").css( "background-color", "lightgreen" );
+		        	$(".output").css( "color", "rgb(89, 89, 89)" );
+		        	$('#suggest').show();
+		        }
       		}, // close success function
 
 
@@ -166,6 +189,7 @@ $(document).ready(function() {
         $('#calculate').show();
 
         $('.results').hide();
+        $('#suggest').hide();
 
         // This clears all input fields after the form submission so the user can easily start over.
         //Add the below on clear
@@ -180,6 +204,7 @@ $(document).ready(function() {
         $('#calculate').show();
 
         $('.results').hide();
+        $('#suggest').hide();
   	} // close if statement
 
 

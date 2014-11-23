@@ -37,7 +37,7 @@ class SignupForm(Form):
 
 
 class ResetPassword(Form):
-    email = TextField("reset_email",  [validators.Required(
+    email = TextField("Your Email Address",  [validators.Required(
         "Please enter your email address."), validators.Email("Please enter your email address.")])
 
     submit = SubmitField("Reset Password")
