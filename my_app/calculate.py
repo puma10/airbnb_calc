@@ -10,6 +10,7 @@ formatter = logging.Formatter(
 console_handler.setFormatter(formatter)
 log.addHandler(console_handler)
 
+# def empty_field():
 
 def calculate_values(data=None):
     # form.get is used to access the data from a form POST request

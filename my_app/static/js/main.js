@@ -24,6 +24,7 @@ $(document).ready(function() {
         $('#save').show();
   		$('#reset').show();
 
+
   		// grab values from the form
 	    title_form = $('input[name="title"]').val();
 	    rent_form = $('input[name="rent"]').val();
@@ -34,11 +35,13 @@ $(document).ready(function() {
 	    cable_form = $('input[name="cable"]').val();
 	    maid_form = $('input[name="maid_service"]').val();
 	    hotel_tax_form = $('input[name="hotel_tax"]').val();
-
 	    occupancy_form = $('input[name="occupancy"]').val();
 	    daily_price_form = $('input[name="daily_price"]').val();
 
-	    submit_time = new Date($.now());
+
+
+
+        submit_time = new Date($.now());
 
 	    console.log(title_form,
 	                rent_form,
@@ -89,7 +92,7 @@ $(document).ready(function() {
 		        $('#submit_time').html(results.time_submitted)
 
 		        if (results.profit < 0){
-		        	$("#suggest_output").html("<b>Bummer</b>, you're not profitable yet. Adjust your nightly rate or increase your average occupancy.");
+		        	$("#suggest_output").html("<b>Bummer</b>, you're not profitable yet. Adjust your nightly rate, increase your average occupancy or find a way to decrease costs.");
 		        	$('#suggest').show();
 		        	$( "#suggest" ).removeClass( "alert alert-success" );
 		        	$( "#suggest" ).addClass( "alert alert-danger" );
@@ -101,7 +104,7 @@ $(document).ready(function() {
 
 
 		        }else{
-		        	$("#suggest_output").html("<b>Chaching</b> Given your calculations your unit is profitable! Checkout these resources to help you get started with Airbnb!");
+		        	$("#suggest_output").html("<b>Cha-ching</b> Given your calculations your unit is profitable! Checkout these resources to help you get started with Airbnb!");
 		        	$( "#suggest" ).removeClass( "alert alert-danger" );
 		        	$( "#suggest" ).addClass( "alert alert-success" );
 

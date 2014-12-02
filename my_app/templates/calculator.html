@@ -3,14 +3,10 @@
 {% block content %}
 
 
-
-
-
-
 {# -------------------- begin form -------------------- #}
 <div class="row calc_form_row">
     <div class="container">
-        <div class="col-lg-12 ">
+        <div class="col-lg-6 ">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Please enter your costs <small>It's free!</small></h3>
@@ -119,19 +115,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-{# -------------------- end form -------------------- #}
-
-
-{# -------------------- begin results -------------------- #}
-{# Our javascript output goes between the span tags #}
-{# class "results" hides and shows the field #}
-{# the span id's output the requested output data #}
-<div class="row results">
-    <div class="container">
+        <div class="col-lg-6 results">
         {# -------------------- begin suggestion -------------------- #}
-
         <div class="row" id="suggest">
                 <p><span id="suggest_output"></span></p>
         </div>
@@ -155,6 +140,16 @@
         </div>
     </div>
 </div>
+    </div>
+</div>
+{# -------------------- end form -------------------- #}
+
+
+{# -------------------- begin results -------------------- #}
+{# Our javascript output goes between the span tags #}
+{# class "results" hides and shows the field #}
+{# the span id's output the requested output data #}
+
 
 {# -------------------- end results -------------------- #}
 

@@ -50,6 +50,8 @@ def home(page=1, paginate_by=10):
     print "the current user id is", current_user.get_id()
     if request.method == 'POST':
 
+        print request.data
+
         calc_data = calculate_values()
         print "views.py: the button clicked was {}".format(request.form.get('clicked_button'))
         # created a function named calculate_values() that holds all calulations.  This will allow unittesting of the app.

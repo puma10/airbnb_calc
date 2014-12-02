@@ -1,4 +1,4 @@
-/*Bootstrap override*/
+/* Begin Bootstrap Override*/
 
 .navbar {
     margin-bottom: 0;
@@ -7,6 +7,14 @@
 .alert {
     width:100%;
 }
+
+/* End Bootstrap Override*/
+.row{
+    margin-left:0;
+    margin-right:0;
+
+}
+
 
 
 div.metadata {
@@ -44,7 +52,7 @@ form.short_form #other_login_info{
 }
 
 .output{
-    float:right;
+    text-align: center;
     color:#009922;
     padding-right:5px;
 
@@ -54,5 +62,7 @@ div.results{
     background-color: lightgreen;
     padding: 18px 0px;
     color: rgb(89, 89, 89);
+    border-radius: 5px;
+    padding: 20px;
 }
 
