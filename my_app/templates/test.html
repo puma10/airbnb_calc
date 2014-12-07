@@ -1,0 +1,26 @@
+{% from "macros.html" import render_field %}
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+  <form method=post action="/test">
+      {{ render_field(form.title) }}
+      {{ render_field(form.rent) }}
+      {{ render_field(form.water) }}
+      {{ render_field(form.garbage) }}
+      {{ render_field(form.electric) }}
+      {{ render_field(form.maid_service) }}
+      {{ render_field(form.hotel_tax) }}
+      {{ render_field(form.occupancy) }}
+      {{ render_field(form.daily_price) }}
+
+      <button id="calculate" type="submit" value="calculate" class="btn btn-info btn-block">Calculate</button>
+
+      <button id="reset" type="reset" value="reset" class="btn btn-info btn-block">Clear</button>
+
+      <button id="save" type="button" value="save" class="btn btn-info btn-block">Save Data</button>
+
+  </form>
+</div>
+
+{% endblock %}

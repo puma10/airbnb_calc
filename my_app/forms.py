@@ -6,6 +6,37 @@ from werkzeug.security import check_password_hash
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from wtforms.validators import Required
 
+class CalculatorForm(Form):
+    title = TextField(
+        "Property Title",  [validators.Required("Please enter a name for your property.")])
+
+    rent = TextField(
+        "Rent", default=0)
+
+    water = TextField(
+        "water")
+
+    sewer = TextField(
+        "sewer")
+
+    garbage = TextField(
+        "garbage")
+
+    electric = TextField(
+        "electric")
+
+    maid_service = TextField(
+        "maid_service")
+
+    hotel_tax = TextField(
+        "hotel_tax")
+
+    occupancy = TextField(
+        "occupancy")
+
+    daily_price = TextField(
+        "daily_price")
+
 
 class SignupForm(Form):
     firstname = TextField(
@@ -70,16 +101,6 @@ class PasswordResetForm(Form):
     def validate(self):
         if not Form.validate(self):
             return False
-
-        # if not (password_1 and password_2):
-        #     print "Please enter both passwords"
-        #     self.password_1.errors.append("Looks like you forgot to enter a value")
-        #     return False
-
-        # if password_1 != password_2:
-        #     print "new passwords don't match"
-        #     self.password_1.errors.append("new passords don't match")
-        #     return False
 
         else:
             return True

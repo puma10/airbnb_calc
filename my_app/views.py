@@ -7,7 +7,7 @@ from flask.ext.login import login_required
 from flask.ext.login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import flash
-from forms import SignupForm, PasswordResetForm, ResetPassword
+from forms import SignupForm, PasswordResetForm, ResetPassword, CalculatorForm
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
 
 from flask.ext.mail import Message, Mail
@@ -29,9 +29,6 @@ def send_email(subject, sender, recipients, text_body, html_body):
     msg.body = text_body
     msg.html = html_body
     mail.send(msg)
-
-
-
 
 
 
@@ -309,6 +306,17 @@ def reset_password(url):
         return redirect(url_for('home'))
 
     return render_template('new_password.html', form=form)
+
+
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    form = CalculatorForm()
+
+    if form.validate_on_submit():
+        for fieldname, value in form.data.items():
+            print "the fieldname is {} and the value is {}".format(fieldname, value)
+
+    return render_template('test.html', form=form)
 
 
 
