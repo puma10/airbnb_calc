@@ -41,7 +41,7 @@ def calculate_values(data=None):
     airbnb_service_charge = .03
     airbnb_service_charge_monthly = float(
         days_occupied) * float(daily_rate) * airbnb_service_charge
-    # This assumes on average a person stays for 2 days.  Find a better way t0
+    # This assumes on average a person stays for 2 days.  Find a better way to
     # establish this later.
     maid_costs_monthly = float(maid) * float(days_occupied) / 2
     hotel_tax_reserve_monthly = (

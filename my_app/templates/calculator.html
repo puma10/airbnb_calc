@@ -17,13 +17,15 @@
 
                         {# title of property #}
                         <div class="form-group">
-                            <input type="text" name="title" id="title" class="form-control input-sm" placeholder="Address or Property Name">
+                            <label for="title">Address or Property Name</label>
+                            <input type="text" name="title" id="title" class="form-control input-sm" placeholder="Evan's Portland Condo">
                         </div>
 
 
                         {# rent amount field #}
                         <div class="form-group">
-                            <input type="text" name="rent" id="rent" class="form-control input-sm" placeholder="Enter Rent Amount ex. $1000.00">
+                            <label for="rent">Monthly Rent or Mortgage</label>
+                            <input type="text" name="rent" id="rent" class="form-control input-sm" placeholder="1000.00 - please exlude the '$'">
                         </div>
 
 
@@ -34,14 +36,16 @@
 
                             {# water #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <input type="text" name="water" id="water" class="form-control input-sm" placeholder="Monthly water bill ex. $50.00">
+                                <label for="water">Average monthly water bill</label>
+                                <input type="text" name="water" id="water" class="form-control input-sm" placeholder="$50.00 - please exlude the '$' ">
                             </div>
 
 
                             {# sewer #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
+                                <label for="sewer">Average monthly sewer bill</label>
                                 <div class="form-group">
-                                    <input type="text" name="sewer" id="sewer" class="form-control input-sm" placeholder="Monthly sewer bill ex. $30.00">
+                                    <input type="text" name="sewer" id="sewer" class="form-control input-sm" placeholder="$30.00 - please exlude the '$'">
                                 </div>
                             </div>
                         </div>
@@ -51,20 +55,23 @@
 
                             {# garbage #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <input type="text" name="garbage" id="garbage" class="form-control input-sm" placeholder="Monthly garbage bill">
+                                <label for="garbage">Average monthly garbage</label>
+                                <input type="text" name="garbage" id="garbage" class="form-control input-sm" placeholder="20">
                             </div>
 
 
                             {# electric #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="electric" id="electric" class="form-control input-sm" placeholder="Monthly electric bill">
+                                    <label for="electric">Average monthly electric</label>
+                                    <input type="text" name="electric" id="electric" class="form-control input-sm" placeholder="25.00 - please exlude the '$'">
                                 </div>
                             </div>
 
                             {# cable #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <input type="text" name="cable" id="cable" class="form-control input-sm" placeholder="Monthly cable bill ex. $50.00">
+                                <label for="electric">Average monthly cable</label>
+                                <input type="text" name="cable" id="cable" class="form-control input-sm" placeholder="50.00 - please exlude the '$'">
                             </div>
 
                         </div>
@@ -79,28 +86,37 @@
 
                             {# maid service #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <input type="text" name="maid_service" id="maid_service" class="form-control input-sm" placeholder="Cost of maid services if you will not be handeling cleaning ex. $200">
+                                <label for="made_service">Average monthly maid service</label>
+
+                                <input type="text" name="maid_service" id="maid_service" class="form-control input-sm" placeholder="200.00 - please exlude the '$'">
+
+                                <h6>Note** This calculation assumes that a guest stays on average for 2 days and that the maid will only have to clean after the leave.</h6>
                             </div>
 
 
                             {# hotel tax #}
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="hotel_tax" id="hotel_tax" class="form-control input-sm" placeholder="Monthly hotel tax reserve ex. 12%">
+                                    <label for="hote_tax">Hotel tax percentage</label>
+                                    <input type="text" name="hotel_tax" id="hotel_tax" class="form-control input-sm" placeholder="12 - please exlude the '%' sign">
+                                    <h6>Currently most states consider airbnb short term rentals to be the equilavent to hotel rentals and therefore sometimes may be taxed as so. Example, Portland has a 12% hotel tax. This is a bit of grey area currently so it's wise to get these funds on reserve and not consider them part of your profit.</h6>
                                 </div>
                             </div>
                         </div>
 
-                        <h3>Variables</h3>
+                        <h3>Income</h3>
 
                         {# occupancy #}
                         <div class="form-group">
-                            <input type="text" name="occupancy" id="occupancy" class="form-control input-sm" placeholder="Occupancy Percentage">
+                            <label for="Occupancy">Monthly Occupation Percentage</label>
+                            <input type="text" name="occupancy" id="occupancy" class="form-control input-sm" placeholder="70 - please exlude the '%' sign ">
+                            <h6>What percetage of all the days in the month do expect your unit to be rented?  70% is a standard in unrban areas.</h6>
                         </div>
 
                         {# daily_price #}
                         <div class="form-group">
-                            <input type="text" name="daily_price" id="daily_price" class="form-control input-sm" placeholder="Daily Price">
+                            <label for="electric">What will be your average price per day?</label>
+                            <input type="text" name="daily_price" id="daily_price" class="form-control input-sm" placeholder="125 - please exlude the '$'">
                         </div>
 
 

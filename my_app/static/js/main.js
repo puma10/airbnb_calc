@@ -78,7 +78,8 @@ $(document).ready(function() {
       // if the ajax connection was succesful we pass the data back in a json object named results
       		success: function(results) {
 	        	console.log(results);
-
+                // scroll to the top of the window after form submission
+                window.scrollTo(0, 0);
 		        // finds the dom item with an id="results" - results (the variable) holds our data from the home funciton in view. We can access jsonify data with results.total
 		        $('.results').show();
 		        $('#breakeven').show();
