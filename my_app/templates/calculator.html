@@ -10,6 +10,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Please enter your costs <small>It's free!</small></h3>
+                    <p style="color:red;">Warning: Please do not leave any form fields blank. Enter 0 instead.</p>
                 </div>
                 <div class="panel-body centered">
                     {# hijiking the defualt form behavior with onsubmit="return false" #}
@@ -90,7 +91,7 @@
 
                                 <input type="text" name="maid_service" id="maid_service" class="form-control input-sm" placeholder="200.00 - please exlude the '$'">
 
-                                <h6>Note** This calculation assumes that a guest stays on average for 2 days and that the maid will only have to clean after the leave.</h6>
+                                <h6>Note** This calculation assumes that a guest stays on average for 2 days and that the maid will only have to clean at the end of their stay.</h6>
                             </div>
 
 
@@ -110,7 +111,7 @@
                         <div class="form-group">
                             <label for="Occupancy">Monthly Occupation Percentage</label>
                             <input type="text" name="occupancy" id="occupancy" class="form-control input-sm" placeholder="70 - please exlude the '%' sign ">
-                            <h6>What percetage of all the days in the month do expect your unit to be rented?  70% is a standard in unrban areas.</h6>
+                            <h6>What percentage of all the days in the month do expect your unit to be rented?  70% is a standard in urban areas.</h6>
                         </div>
 
                         {# daily_price #}
