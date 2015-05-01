@@ -3,6 +3,7 @@ from models import User
 from database import session
 from werkzeug.security import check_password_hash
 
+
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from wtforms.validators import Required
 

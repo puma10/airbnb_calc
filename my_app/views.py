@@ -40,7 +40,7 @@ def index():
 
 # Calculator
 @app.route("/calc", methods=['GET', 'POST'])
-@login_required
+
 def home(page=1, paginate_by=10):
     # tests
     print "in the view function"

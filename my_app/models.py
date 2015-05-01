@@ -101,7 +101,7 @@ class Input(Base):
         return post
 
     def __repr__(self):
-        return "'Input' object from model.py - input_title = {}: input id = {}".format(self.title, self.id)
+        return "'Input' object from models.py - input_title = {}: input id = {}".format(self.title, self.id)
 
 
 

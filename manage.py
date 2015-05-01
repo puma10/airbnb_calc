@@ -4,6 +4,7 @@ from flask.ext.script import Manager
 
 from my_app import app
 
+# terminal prompt to get password from user
 from getpass import getpass
 
 from werkzeug.security import generate_password_hash
@@ -48,6 +49,7 @@ def adduser():
     password = raw_input("Password ")
     password_2 = raw_input("Password ")
     while not (password and password_2) or password != password_2:
+        # use get pass from the get pass modelue to add a user
         password = getpass("Password: ")
         password_2 = getpass("Re-enter password: ")
     user = User(name=name, email=email,
